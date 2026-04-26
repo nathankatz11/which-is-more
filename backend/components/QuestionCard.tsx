@@ -311,7 +311,7 @@ function RevealPanel({
         >
           {isCorrect ? "CORRECT!" : "ACTUALLY…"}
         </p>
-        <VoteBars question={question} stats={voteStats ?? null} isCorrect={isCorrect} />
+        <VoteBars question={question} stats={voteStats ?? null} />
         <p
           className={`mt-3 text-xs sm:text-sm md:text-base leading-relaxed ${
             isCorrect ? "text-white/95" : "text-[#1a1a1a]/80"
@@ -333,48 +333,46 @@ function RevealPanel({
 function VoteBars({
   question,
   stats,
-  isCorrect,
 }: {
   question: QuestionDTO;
   stats: VoteStats | null;
-  isCorrect: boolean;
 }) {
   const total = stats ? stats.votesA + stats.votesB : 0;
-  const pctA = total === 0 ? 50 : Math.round((stats!.votesA / total) * 100);
-  const pctB = 100 - pctA;
-  // White works on both red and coral — coral is saturated enough to hold white text
-  const labelColor = "text-white/90";
-  const dimColor = "text-white/55";
-  const trackColor = "bg-white/20";
-  const fillColor = "bg-white/80";
+  const correctVotes = stats
+    ? question.answer === "A" ? stats.votesA : stats.votesB
+    : 0;
+  const rightPct = total === 0 ? 0 : Math.round((correctVotes / total) * 100);
+  const wrongPct = 100 - rightPct;
 
   return (
-    <div className="mt-3 space-y-1.5">
-      {(["A", "B"] as const).map((opt) => {
-        const pct = opt === "A" ? pctA : pctB;
-        const isAnswer = opt === question.answer;
-        return (
-          <div key={opt} className="flex items-center gap-2">
-            <span className={`text-[11px] font-black w-3 shrink-0 ${isAnswer ? labelColor : dimColor}`}>
-              {opt}
-            </span>
-            <div className={`flex-1 h-1.5 rounded-full overflow-hidden ${trackColor}`}>
-              <div
-                className={`h-full rounded-full transition-[width] duration-700 ease-out ${fillColor}`}
-                style={{ width: stats ? `${pct}%` : "0%" }}
-              />
-            </div>
-            <span className={`text-[11px] font-bold w-7 text-right shrink-0 tabular-nums ${isAnswer ? labelColor : dimColor}`}>
-              {stats ? `${pct}%` : "…"}
-            </span>
-          </div>
-        );
-      })}
-      {total > 0 && (
-        <p className="text-[9px] uppercase tracking-[0.15em] text-right pt-0.5 text-white/50">
-          {total.toLocaleString()} {total === 1 ? "player" : "players"}
-        </p>
-      )}
+    <div className="mt-4 mb-1">
+      {/* Headline */}
+      <p className="text-[11px] font-black uppercase tracking-[0.18em] text-white/70 mb-2">
+        {stats
+          ? `${rightPct}% of players got this right`
+          : "Checking the crowd…"}
+      </p>
+
+      {/* Split bar — right (bright) | wrong (dim) */}
+      <div className="h-2.5 rounded-full bg-white/15 overflow-hidden flex">
+        <div
+          className="h-full bg-white/85 transition-[width] duration-700 ease-out"
+          style={{ width: stats ? `${rightPct}%` : "0%" }}
+        />
+      </div>
+
+      {/* Labels beneath bar */}
+      <div className="flex justify-between mt-1.5">
+        <span className="text-[10px] font-bold text-white/80">
+          ✓ {stats ? `${rightPct}%` : "—"} right
+        </span>
+        <span className="text-[10px] text-white/45 tabular-nums">
+          {total > 0 ? `${total.toLocaleString()} players` : ""}
+        </span>
+        <span className="text-[10px] font-bold text-white/45">
+          {stats ? `${wrongPct}%` : "—"} wrong ✗
+        </span>
+      </div>
     </div>
   );
 }
