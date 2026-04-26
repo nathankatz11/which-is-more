@@ -23,6 +23,7 @@ struct GameView: View {
     @State private var total = 0
     @State private var seen: [String]
     @State private var pressedOption: Question.Answer?
+    @State private var voteStats: VoteStats?
     @State private var photoMode: Bool = UserDefaults.standard.bool(forKey: "wim_photo_mode")
     @State private var muted: Bool = UserDefaults.standard.bool(forKey: "wim_muted")
     @Environment(\.dismiss) private var dismiss
@@ -90,7 +91,7 @@ struct GameView: View {
         case .revealed(let q, let picked):
             ZStack(alignment: .bottom) {
                 questionContainer(q, picked: picked)
-                AnswerReveal(question: q, picked: picked, onNext: {
+                AnswerReveal(question: q, picked: picked, voteStats: voteStats, onNext: {
                     #if canImport(UIKit)
                     UISelectionFeedbackGenerator().selectionChanged()
                     #endif
@@ -244,6 +245,13 @@ struct GameView: View {
         ) {
             phase = .revealed(question, picked: answer)
         }
+        // Fire vote non-blocking — result populates social proof bars
+        let slug = question.slug ?? question.id
+        Task {
+            if let stats = try? await service.vote(slug: slug, option: answer) {
+                await MainActor.run { voteStats = stats }
+            }
+        }
     }
 
     private func restart() {
@@ -277,6 +285,7 @@ struct GameView: View {
     }
 
     private func loadNext() async {
+        voteStats = nil
         withAnimation(.easeInOut(duration: 0.2)) { phase = .loading }
         do {
             let result = try await service.random(excluding: seen, category: category)

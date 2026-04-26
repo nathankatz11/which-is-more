@@ -1,9 +1,25 @@
 import Foundation
 
+struct VoteStats: Sendable {
+    let votesA: Int
+    let votesB: Int
+
+    var total: Int { votesA + votesB }
+
+    func pct(for answer: Question.Answer) -> Int {
+        guard total > 0 else { return 50 }
+        let count = answer == .a ? votesA : votesB
+        let a = Int((Double(count) / Double(total) * 100).rounded())
+        // Ensure A+B always sums to 100 after rounding
+        return answer == .a ? a : 100 - Int((Double(votesA) / Double(total) * 100).rounded())
+    }
+}
+
 protocol QuestionServicing: Sendable {
     func random(excluding: [String], category: Question.Category?) async throws -> RandomResult
     func list(category: Question.Category?) async throws -> [Question]
     func get(slug: String) async throws -> Question
+    func vote(slug: String, option: Question.Answer) async throws -> VoteStats
 }
 
 extension QuestionServicing {
@@ -90,11 +106,25 @@ final class QuestionService: QuestionServicing {
         return wrapper.question
     }
 
+    func vote(slug: String, option: Question.Answer) async throws -> VoteStats {
+        let url = baseURL.appendingPathComponent("/api/questions/\(slug)/vote")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONEncoder().encode(["option": option.rawValue])
+        let wrapper: VoteResponse = try await fetchRequest(request)
+        return VoteStats(votesA: wrapper.votesA, votesB: wrapper.votesB)
+    }
+
     private func fetch<T: Decodable>(url: URL) async throws -> T {
+        try await fetchRequest(URLRequest(url: url))
+    }
+
+    private func fetchRequest<T: Decodable>(_ request: URLRequest) async throws -> T {
         let data: Data
         let response: URLResponse
         do {
-            (data, response) = try await session.data(from: url)
+            (data, response) = try await session.data(for: request)
         } catch {
             throw WIMError.transport(error)
         }
@@ -116,6 +146,7 @@ final class QuestionService: QuestionServicing {
     }
     private struct SingleWrapper: Decodable { let question: Question }
     private struct ListWrapper: Decodable { let questions: [Question] }
+    private struct VoteResponse: Decodable { let votesA: Int; let votesB: Int }
 }
 
 /// Deterministic preview service — never hits the network.
@@ -127,4 +158,7 @@ final class MockQuestionService: QuestionServicing {
     }
     func list(category: Question.Category?) async throws -> [Question] { [sample] }
     func get(slug: String) async throws -> Question { sample }
+    func vote(slug: String, option: Question.Answer) async throws -> VoteStats {
+        VoteStats(votesA: 68, votesB: 32)
+    }
 }

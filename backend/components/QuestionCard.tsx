@@ -2,12 +2,15 @@
 
 import type { QuestionDTO } from "@/lib/questions";
 
+type VoteStats = { votesA: number; votesB: number };
+
 type Props = {
   question: QuestionDTO;
   picked: "A" | "B" | null;
   onPick: (choice: "A" | "B") => void;
   onNext: () => void;
   imageMode?: boolean;
+  voteStats?: VoteStats | null;
 };
 
 export default function QuestionCard({
@@ -16,6 +19,7 @@ export default function QuestionCard({
   onPick,
   onNext,
   imageMode = false,
+  voteStats,
 }: Props) {
   const revealed = picked !== null;
   const aIsLosing = revealed && question.answer !== "A";
@@ -62,7 +66,7 @@ export default function QuestionCard({
               useImage={useImageA}
             />
           }
-          reveal={<RevealPanel question={question} picked={picked} onNext={onNext} />}
+          reveal={<RevealPanel question={question} picked={picked} onNext={onNext} voteStats={voteStats} />}
         />
         <Slot
           losing={bIsLosing}
@@ -77,7 +81,7 @@ export default function QuestionCard({
               useImage={useImageB}
             />
           }
-          reveal={<RevealPanel question={question} picked={picked} onNext={onNext} />}
+          reveal={<RevealPanel question={question} picked={picked} onNext={onNext} voteStats={voteStats} />}
         />
 
         {/* Vertical divider + floating OR pill — only before a pick.
@@ -283,10 +287,12 @@ function RevealPanel({
   question,
   picked,
   onNext,
+  voteStats,
 }: {
   question: QuestionDTO;
   picked: "A" | "B" | null;
   onNext: () => void;
+  voteStats?: VoteStats | null;
 }) {
   const isCorrect = picked === question.answer;
   const tone = isCorrect ? "bg-red-600 text-white" : "bg-[#F4A69E] text-[#1a1a1a]";
@@ -305,6 +311,7 @@ function RevealPanel({
         >
           {isCorrect ? "CORRECT!" : "ACTUALLY…"}
         </p>
+        <VoteBars question={question} stats={voteStats ?? null} isCorrect={isCorrect} />
         <p
           className={`mt-3 text-xs sm:text-sm md:text-base leading-relaxed ${
             isCorrect ? "text-white/95" : "text-[#1a1a1a]/80"
@@ -319,6 +326,55 @@ function RevealPanel({
           Next question →
         </button>
       </div>
+    </div>
+  );
+}
+
+function VoteBars({
+  question,
+  stats,
+  isCorrect,
+}: {
+  question: QuestionDTO;
+  stats: VoteStats | null;
+  isCorrect: boolean;
+}) {
+  const total = stats ? stats.votesA + stats.votesB : 0;
+  const pctA = total === 0 ? 50 : Math.round((stats!.votesA / total) * 100);
+  const pctB = 100 - pctA;
+  // On the red (correct) background use white tones; on coral use ink tones
+  const labelColor = isCorrect ? "text-white/90" : "text-[#1a1a1a]/70";
+  const dimColor = isCorrect ? "text-white/55" : "text-[#1a1a1a]/45";
+  const trackColor = isCorrect ? "bg-white/20" : "bg-[#1a1a1a]/12";
+  const fillColor = isCorrect ? "bg-white/75" : "bg-[#1a1a1a]/35";
+
+  return (
+    <div className="mt-3 space-y-1.5">
+      {(["A", "B"] as const).map((opt) => {
+        const pct = opt === "A" ? pctA : pctB;
+        const isAnswer = opt === question.answer;
+        return (
+          <div key={opt} className="flex items-center gap-2">
+            <span className={`text-[11px] font-black w-3 shrink-0 ${isAnswer ? labelColor : dimColor}`}>
+              {opt}
+            </span>
+            <div className={`flex-1 h-1.5 rounded-full overflow-hidden ${trackColor}`}>
+              <div
+                className={`h-full rounded-full transition-[width] duration-700 ease-out ${fillColor}`}
+                style={{ width: stats ? `${pct}%` : "0%" }}
+              />
+            </div>
+            <span className={`text-[11px] font-bold w-7 text-right shrink-0 tabular-nums ${isAnswer ? labelColor : dimColor}`}>
+              {stats ? `${pct}%` : "…"}
+            </span>
+          </div>
+        );
+      })}
+      {total > 0 && (
+        <p className={`text-[9px] uppercase tracking-[0.15em] text-right pt-0.5 ${dimColor}`}>
+          {total.toLocaleString()} {total === 1 ? "player" : "players"}
+        </p>
+      )}
     </div>
   );
 }

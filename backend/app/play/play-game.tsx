@@ -76,6 +76,7 @@ export default function PlayGame({
   const [imageMode, setImageMode] = useState(false);
   const [error, setError] = useState<string | null>(initial ? null : "No questions available");
   const [exhausted, setExhausted] = useState(false);
+  const [voteStats, setVoteStats] = useState<{ votesA: number; votesB: number } | null>(null);
 
   useEffect(() => {
     // One-shot hydration from localStorage. Pulled in an effect because the
@@ -122,6 +123,7 @@ export default function PlayGame({
   const fetchNext = async (reset = false) => {
     setLoading(true);
     setPicked(null);
+    setVoteStats(null);
     setError(null);
     try {
       const seen = reset ? [] : loadSeen();
@@ -177,6 +179,15 @@ export default function PlayGame({
     }
     const seen = loadSeen();
     if (!seen.includes(question.slug)) saveSeen([...seen, question.slug]);
+    // Fire vote — non-blocking, result populates social proof bars
+    fetch(`/api/questions/${question.slug}/vote`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ option: choice }),
+    })
+      .then((r) => r.json())
+      .then((data) => setVoteStats(data as { votesA: number; votesB: number }))
+      .catch(() => {});
   };
 
   const restart = () => {
@@ -279,6 +290,7 @@ export default function PlayGame({
           onPick={handlePick}
           onNext={() => fetchNext()}
           imageMode={imageMode}
+          voteStats={voteStats}
         />
       )}
     </main>

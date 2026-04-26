@@ -5,6 +5,8 @@ import {
   boolean,
   pgEnum,
   uuid,
+  integer,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 export const categoryEnum = pgEnum("category", [
@@ -50,3 +52,13 @@ export const questions = pgTable("questions", {
 
 export type Question = typeof questions.$inferSelect;
 export type NewQuestion = typeof questions.$inferInsert;
+
+export const questionVotes = pgTable("question_votes", {
+  questionId: uuid("question_id").notNull().references(() => questions.id, { onDelete: "cascade" }),
+  option: answerEnum("option").notNull(),
+  count: integer("count").notNull().default(0),
+}, (t) => ({
+  pk: primaryKey({ columns: [t.questionId, t.option] }),
+}));
+
+export type QuestionVote = typeof questionVotes.$inferSelect;
