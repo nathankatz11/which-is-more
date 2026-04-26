@@ -13,6 +13,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts",
+    "db:seed-votes": "tsx scripts/seed-votes.ts",
     "db:import-images": "tsx scripts/import-images.ts"
   },
   "dependencies": {
