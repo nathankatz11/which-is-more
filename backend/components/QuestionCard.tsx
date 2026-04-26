@@ -342,11 +342,11 @@ function VoteBars({
   const total = stats ? stats.votesA + stats.votesB : 0;
   const pctA = total === 0 ? 50 : Math.round((stats!.votesA / total) * 100);
   const pctB = 100 - pctA;
-  // On the red (correct) background use white tones; on coral use ink tones
-  const labelColor = isCorrect ? "text-white/90" : "text-[#1a1a1a]/70";
-  const dimColor = isCorrect ? "text-white/55" : "text-[#1a1a1a]/45";
-  const trackColor = isCorrect ? "bg-white/20" : "bg-[#1a1a1a]/12";
-  const fillColor = isCorrect ? "bg-white/75" : "bg-[#1a1a1a]/35";
+  // White works on both red and coral — coral is saturated enough to hold white text
+  const labelColor = "text-white/90";
+  const dimColor = "text-white/55";
+  const trackColor = "bg-white/20";
+  const fillColor = "bg-white/80";
 
   return (
     <div className="mt-3 space-y-1.5">
@@ -371,7 +371,7 @@ function VoteBars({
         );
       })}
       {total > 0 && (
-        <p className={`text-[9px] uppercase tracking-[0.15em] text-right pt-0.5 ${dimColor}`}>
+        <p className="text-[9px] uppercase tracking-[0.15em] text-right pt-0.5 text-white/50">
           {total.toLocaleString()} {total === 1 ? "player" : "players"}
         </p>
       )}
