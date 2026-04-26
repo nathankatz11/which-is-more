@@ -1,0 +1,185 @@
+{
+  "id": "f1f453e2-d426-4d5c-90e9-3892c332e177",
+  "prevId": "8d9814ee-92f9-4890-894e-7bac9df01cdb",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.questions": {
+      "name": "questions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "category",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "option_a_text": {
+          "name": "option_a_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "option_a_value": {
+          "name": "option_a_value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "option_a_image": {
+          "name": "option_a_image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "option_a_emoji": {
+          "name": "option_a_emoji",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "option_b_text": {
+          "name": "option_b_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "option_b_value": {
+          "name": "option_b_value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "option_b_image": {
+          "name": "option_b_image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "option_b_emoji": {
+          "name": "option_b_emoji",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "answer": {
+          "name": "answer",
+          "type": "answer",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "answer_label": {
+          "name": "answer_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "explanation": {
+          "name": "explanation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "authored": {
+          "name": "authored",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "needs_review": {
+          "name": "needs_review",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "questions_slug_unique": {
+          "name": "questions_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.answer": {
+      "name": "answer",
+      "schema": "public",
+      "values": [
+        "A",
+        "B"
+      ]
+    },
+    "public.category": {
+      "name": "category",
+      "schema": "public",
+      "values": [
+        "food",
+        "science",
+        "sports",
+        "entertainment",
+        "family_life",
+        "hobbies",
+        "cultures",
+        "famous_people",
+        "world_records",
+        "planets",
+        "environment",
+        "plants",
+        "transportation",
+        "world_history",
+        "other"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

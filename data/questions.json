@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "title": "Which is More?",
+    "author": "Alan Katz",
+    "source": "Alan Katz's 'Which is More?' series pitch PDF",
+    "description": "Comparative trivia — players choose which of two quantities is larger. Questions 1–4 use Alan's original copy from the pitch PDF. Questions 5–10 are drafts in Alan's voice that should be reviewed/rewritten by Alan before ship — they are NOT from the PDF."
+  },
+  "questions": [
+    {
+      "id": "gum-vs-skin",
+      "category": "science",
+      "optionA": {
+        "text": "The number of pounds of gum the average American chews in a year",
+        "value": "1.8 pounds",
+        "emoji": "🍬"
+      },
+      "optionB": {
+        "text": "The number of pounds of skin the average human sheds in a year",
+        "value": "1.5 pounds",
+        "emoji": "🧍"
+      },
+      "answer": "A",
+      "answerLabel": "GUM",
+      "explanation": "According to the U.S. Census Bureau, the average American chews 1.8 pounds of gum annually. Reference.com tells us that humans shed about 600,000 particles of skin every hour, which is about 1.5 pounds a year. (By age 70, you'll have shed over 105 pounds of skin!) Step away, please…I don't want you shedding all over me!",
+      "authored": true,
+      "needsReview": false
+    },
+    {
+      "id": "m-states-vs-face-cards",
+      "category": "world_records",
+      "optionA": {
+        "text": "The number of U.S. states that start with the letter M",
+        "value": "8 states",
+        "emoji": "🇺🇸"
+      },
+      "optionB": {
+        "text": "The number of face cards (jacks, queens and kings) in a standard deck of playing cards",
+        "value": "12 cards",
+        "emoji": "🃏"
+      },
+      "answer": "B",
+      "answerLabel": "PLAYING CARDS!",
+      "explanation": "Each standard deck of 52 cards has four jacks, four queens and four kings. So that's 12 face cards. Of the fifty states in America, eight of them start with the letter M. They're Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri and Montana. Here's a bonus fact: Maine is the only U.S. state with a one-syllable name.",
+      "authored": true,
+      "needsReview": false
+    },
+    {
+      "id": "nickels-vs-freds",
+      "category": "famous_people",
+      "optionA": {
+        "text": "The number of nickels you could get with $10,000",
+        "value": "200,000 nickels",
+        "emoji": "🪙"
+      },
+      "optionB": {
+        "text": "The number of people in the U.S. whose first name is Fred",
+        "value": "421,500 Freds",
+        "emoji": "🧔"
+      },
+      "answer": "B",
+      "answerLabel": "FRED!",
+      "explanation": "Howmanyofme.com says that there are over 421,500 people named Fred in America. I don't know any Freds, but it's a fine name. Since there are 20 nickels in a dollar, you could get 200,000 nickels for $10,000. Two questions: 1, what are you going to do with 200,000 nickels? And 2, where did you get the $10,000? Maybe from your Uncle Fred?",
+      "authored": true,
+      "needsReview": false
+    },
+    {
+      "id": "threes-vs-foul-balls",
+      "category": "sports",
+      "optionA": {
+        "text": "The average number of 3-pointers made in an NBA game",
+        "value": "12.7 made (34.6 attempted) per team",
+        "emoji": "🏀"
+      },
+      "optionB": {
+        "text": "The average number of foul balls in an MLB game",
+        "value": "53.8 foul balls",
+        "emoji": "⚾"
+      },
+      "answer": "B",
+      "answerLabel": "FOUL BALLS!",
+      "explanation": "The NBA says that teams each takes an average of 34.6 3-point shots per game. (And by the way, about 12.7 of those shots actually go into the basket.) NBC News reported that an average of 53.8 foul balls are hit per Major League game. If you are at a game with 40,000 people, you have a very small chance of catching a ball (remember, not all of those foul balls go into the stands). Still, it pays to bring a glove to a baseball game; my son Andrew once caught two foul balls at a single game!",
+      "authored": true,
+      "needsReview": false
+    },
+    {
+      "id": "tv-teens-vs-seniors",
+      "category": "family_life",
+      "optionA": {
+        "text": "The daily number of hours of TV watched by the average American 15-19 year old",
+        "value": "About 2 hours",
+        "emoji": "👦"
+      },
+      "optionB": {
+        "text": "The daily number of hours of TV watched by the average American 75 and older",
+        "value": "About 4.4 hours",
+        "emoji": "👴"
+      },
+      "answer": "B",
+      "answerLabel": "THE SENIORS!",
+      "explanation": "The Bureau of Labor Statistics says the average American 75 and older watches TV for about 4.4 hours a day. Teenagers from 15 to 19, meanwhile, watch right around 2 hours. But before you feel too bad for the teens — they're just staring at their phones instead! Screens, screens, and more screens.",
+      "authored": false,
+      "needsReview": true
+    },
+    {
+      "id": "soda-vs-snot",
+      "category": "science",
+      "optionA": {
+        "text": "The number of gallons of soda the average American drinks in a year",
+        "value": "About 38 gallons",
+        "emoji": "🥤"
+      },
+      "optionB": {
+        "text": "The number of gallons of snot the average American produces in a year",
+        "value": "About 100 gallons",
+        "emoji": "🤧"
+      },
+      "answer": "B",
+      "answerLabel": "SNOT!",
+      "explanation": "The average American drinks about 38 gallons of soda every year. But your body produces roughly one liter of mucus every single day — which adds up to about 100 gallons a year. Yes, you're a snot factory. Quick, go hug a tissue box. And maybe put down the soda, too.",
+      "authored": false,
+      "needsReview": true
+    },
+    {
+      "id": "diapers-vs-pizza",
+      "category": "food",
+      "optionA": {
+        "text": "The number of diapers an average baby will use in her first year",
+        "value": "About 2,500 diapers",
+        "emoji": "👶"
+      },
+      "optionB": {
+        "text": "The number of pizza slices the average American will eat in a lifetime",
+        "value": "About 6,000 slices",
+        "emoji": "🍕"
+      },
+      "answer": "B",
+      "answerLabel": "PIZZA!",
+      "explanation": "Babies go through roughly 2,500 diapers in their first year (sorry, parents). But the average American will eat about 6,000 slices of pizza over a lifetime — somewhere around 46 slices a year. That's a LOT of pepperoni. Which — come to think of it — could explain all the diapers, too.",
+      "authored": false,
+      "needsReview": true
+    },
+    {
+      "id": "tp-sheets-vs-family-water",
+      "category": "environment",
+      "optionA": {
+        "text": "The number of sheets of toilet paper on a two-ply roll",
+        "value": "200 to 240 sheets",
+        "emoji": "🧻"
+      },
+      "optionB": {
+        "text": "The number of gallons of water the average American family uses in a day",
+        "value": "About 300 gallons",
+        "emoji": "💧"
+      },
+      "answer": "B",
+      "answerLabel": "WATER!",
+      "explanation": "A standard two-ply roll has around 200 to 240 sheets. The EPA says the average American family uses roughly 300 gallons of water a day — showers, flushes, sinks, laundry, the works. So your family splashes through more gallons than you can count squares. Turn off the tap while you brush!",
+      "authored": false,
+      "needsReview": true
+    },
+    {
+      "id": "batteries-vs-hippo",
+      "category": "science",
+      "optionA": {
+        "text": "The weight of 50,000 AA batteries",
+        "value": "About 2,650 pounds",
+        "emoji": "🔋"
+      },
+      "optionB": {
+        "text": "The weight of an adult female hippo",
+        "value": "About 3,000 pounds",
+        "emoji": "🦛"
+      },
+      "answer": "B",
+      "answerLabel": "THE HIPPO!",
+      "explanation": "One AA battery weighs about 0.85 ounces. So 50,000 of them come out to roughly 2,650 pounds. An adult female hippopotamus, on the other hand, averages closer to 3,000 pounds. The hippo wins — by about the weight of a small motorcycle. I still wouldn't want to drop either one on my foot.",
+      "authored": false,
+      "needsReview": true
+    },
+    {
+      "id": "cow-vs-kid-milk",
+      "category": "food",
+      "optionA": {
+        "text": "The amount of milk an average U.S. dairy cow produces in a day",
+        "value": "About 7 gallons",
+        "emoji": "🐄"
+      },
+      "optionB": {
+        "text": "The amount of milk an average American 5-year-old drinks in a month",
+        "value": "About 3 gallons",
+        "emoji": "🥛"
+      },
+      "answer": "A",
+      "answerLabel": "THE COW!",
+      "explanation": "The USDA says an average U.S. dairy cow produces around 7 gallons of milk per day. If your 5-year-old drinks two cups a day (and doesn't spill), that's about 3 gallons a month. So one cow, one day beats one kid, one month. Moooove over!",
+      "authored": false,
+      "needsReview": true
+    }
+  ]
+}
